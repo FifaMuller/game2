@@ -14,23 +14,14 @@ public class AbnormalTitan extends Titan implements Attacker
 	}
 	
 	public int attack(Attackee target) {
+		int res = 0;
 		if(this.hasReachedTarget()) {
-			target.takeDamage(getDamage());
-			if(target.isDefeated())
-				return target.getResourcesValue();
-			else {
-				target.takeDamage(getDamage());
-				if(target.isDefeated())
-					return target.getResourcesValue();
-				else
-					return 0;
+			for(int i = 0; i<2 && !target.isDefeated(); i++) {
+				res = target.takeDamage(getDamage());
 			}
-			
+			return res;
 		}
-		else return 0;
-	
-			
-		
+		else return 0;	
 	}
 
 }
