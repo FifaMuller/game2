@@ -11,7 +11,7 @@ public interface Attackee
 	
 	
 	public default boolean isDefeated() {
-		if(getCurrentHealth() < 0) 
+		if(getCurrentHealth() <= 0) 
 			return true;
 		
 		else
@@ -21,11 +21,8 @@ public interface Attackee
 	public default int takeDamage(int damage) {
 		setCurrentHealth(getCurrentHealth() - damage);
 		
-		if(isDefeated())
-			return getResourcesValue();
-		
-		else
-			return 0;
+		if(isDefeated()) return getResourcesValue();
+		else return 0;
 		
 	}
 

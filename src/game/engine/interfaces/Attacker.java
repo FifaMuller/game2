@@ -7,12 +7,8 @@ public interface Attacker
 	
 	
 	public default int attack(Attackee target) {
-		target.takeDamage(getDamage());
+		return target.takeDamage(getDamage());
 		
-		if(target.isDefeated())
-			return target.getResourcesValue();
-		else
-			return 0;
 			
 	}
 
