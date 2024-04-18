@@ -217,38 +217,147 @@ public class Battle
 		}
 		
 		FactoryResponse wp = weaponFactory.buyWeapon(resourcesGathered, weaponCode);
+		resourcesGathered = wp.getRemainingResources();
 		lane.addWeapon(wp.getWeapon());
 		
 		
 		}
 	public void passTurn() {
-		
+		performTurn();
 	}
 	 private void addTurnTitansToLane() {
 		 Lane [] arr = new Lane[lanes.size()];
-		 int i =0;
+		 int i = 0;
 		 while(!lanes.isEmpty()) {
 			 arr[i]= lanes.poll();
 			  i++;
 		 }
 		 for(int j = 0; j < arr.length; j ++) {
-			 lanes.add(arr[i]);
+			 lanes.add(arr[j]);
 		 }
 		 if(approachingTitans.isEmpty()) {
 			 refillApproachingTitans();
 		 }
-		 int ii=0;
-		 int jj = arr.length-1;
-		 while(jj>=0) {
-			 if(!arr[jj].isLaneLost()) {
-				 arr[jj].addTitan(approachingTitans.get(ii));
-			 }
-			 ii++;
-			 jj++;
+		 int x  = 0;
+		 while(i>=0) {
+			 if(!arr[i-1].isLaneLost())
+				 break;
+			 else
+				 i--;
 		 }
+		 while(x<=numberOfTitansPerTurn) {
+			 arr[i].addTitan(approachingTitans.get(x));
+			 x++;
+		 }
+		
+		}
+	 
+	 private void moveTitans() {
+		 PriorityQueue<Lane> pq = new PriorityQueue<Lane>();
+		 while(!lanes.isEmpty()) {
+			 lanes.peek().moveLaneTitans();
+			 pq.add(lanes.poll());
+		 }
+		 while(!pq.isEmpty()) {
+			 lanes.add(pq.poll());
+		 }
+	 }
+	 private int performWeaponsAttacks() {
+		 PriorityQueue<Lane> pq = new PriorityQueue<Lane>();
+		 int rv = 0;
+		 if(lanes.isEmpty())
+			 return rv;
+		 else {
+			 while(!lanes.isEmpty()) {
+				rv = rv + lanes.peek().performLaneWeaponsAttacks();
+				 pq.add(lanes.poll());
+			 }
+			 while(!pq.isEmpty()) {
+				 lanes.add(pq.poll());
+			 }
+			 
+		 }
+		 return rv;
+			 
+		 }
+	 private int performTitansAttacks() {
+		 PriorityQueue<Lane> pq = new PriorityQueue<Lane>();
+		 int rv = 0;
+		 if(lanes.isEmpty())
+			 return rv;
+		 else {
+			 while(!lanes.isEmpty()) {
+				rv = rv + lanes.peek().performLaneTitansAttacks();
+				 pq.add(lanes.poll());
+			 }
+			 while(!pq.isEmpty()) {
+				 lanes.add(pq.poll());
+			 }
+			 
+		 }
+		 return rv;
+	 }
+	 private void updateLanesDangerLevels() {
+		 PriorityQueue<Lane> pq = new PriorityQueue<Lane>();
+		 while(!lanes.isEmpty()) {
+			 lanes.peek().updateLaneDangerLevel();
+			 pq.add(lanes.poll());
+		 }
+		 while(!pq.isEmpty()) {
+			 lanes.add(pq.poll());
+		 }
+	 }
+	 private void finalizeTurns() {
+		 if(numberOfTurns<15) {
+			 battlePhase = BattlePhase.EARLY;
+			 numberOfTurns++;
+		 }
+		 if(numberOfTurns<30 && numberOfTurns>=15) {
+			 battlePhase = BattlePhase.INTENSE;
+			 numberOfTurns++;
+		 }
+		 if(numberOfTurns>=30) {
+			 battlePhase = BattlePhase.GRUMBLING;
+			 numberOfTurns++;
+		 }
+		 if(numberOfTurns>30 &&  numberOfTurns%5 == 0) {
+			 numberOfTurns++;
+			 numberOfTitansPerTurn = numberOfTitansPerTurn *2;
+		 }
+		 
+		 
+		 
+	 }
+	 private void performTurn() {
+		 moveTitans();
+		 performWeaponsAttacks();
+		 performTitansAttacks();
+		 addTurnTitansToLane();
+		 updateLanesDangerLevels();
+		 finalizeTurns();
+	 }
+	 public boolean isGameOver() {
+		 PriorityQueue<Lane> pq = new PriorityQueue<Lane>();
+		 boolean gameOver = true;
+		 while(!lanes.isEmpty()) {
+			 if(!lanes.peek().isLaneLost()) {
+				 gameOver = false;
+				 break;
+			 }
+			 else {
+				 pq.add(lanes.poll());
+				 
+			 }
+		 }
+		 while(!pq.isEmpty()) {
+			 lanes.add(pq.poll());
+		 }
+		 return gameOver;
+		 
 	 }
 	
 	}
+
 
 	
 
