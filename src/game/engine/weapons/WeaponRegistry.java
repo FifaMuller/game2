@@ -1,5 +1,11 @@
 package game.engine.weapons;
 
+import game.engine.titans.AbnormalTitan;
+import game.engine.titans.ArmoredTitan;
+import game.engine.titans.ColossalTitan;
+import game.engine.titans.PureTitan;
+import game.engine.titans.Titan;
+
 public class WeaponRegistry
 {
 	private final int code;
@@ -65,5 +71,24 @@ public class WeaponRegistry
 	{
 		return maxRange;
 	}
-
+	public Weapon buildWeapon() 
+	{
+		Weapon w = null;
+		switch(code) {
+		case 1:
+			w = new PiercingCannon(damage);
+			break;
+		case 2:
+			w = new SniperCannon(damage);
+			break;
+		case 3:
+			w = new VolleySpreadCannon(damage,minRange,maxRange);
+			break;
+		case 4:
+			w = new WallTrap(damage);
+			break;
+		}
+		
+		return w;
+	}
 }

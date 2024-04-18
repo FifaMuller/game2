@@ -13,12 +13,9 @@ public class ArmoredTitan extends Titan implements Attackee
 	}
 	
 	public int takeDamage(int damage) {
-		setCurrentHealth((getCurrentHealth() - damage) / 4);
-		if(isDefeated())
-			return getResourcesValue();
-		
-		else
-			return 0;
+		setCurrentHealth(getCurrentHealth() - (damage / 4));
+		if(isDefeated()) return getResourcesValue();
+		else return 0;
 	}
 
 }

@@ -21,11 +21,12 @@ public interface Mobil
 	
 	public default boolean move() {		
 		
-		if(getDistance() < 0)
+		if(getDistance() <= 0)
 			return true;
 		else {
 			setDistance(getDistance() - getSpeed());
-			return false;}
+			return false;
+			}
 	}
 
 }

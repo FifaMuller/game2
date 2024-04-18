@@ -68,11 +68,11 @@ public class Lane implements Comparable<Lane>
 				titans.peek().move();
 				pq.add(titans.poll());
 			}
-			while(!pq.isEmpty()) {
+		}
+		while(!pq.isEmpty()) {
 				titans.add(pq.poll());
 			}
 		}
-	}
 	public int performLaneTitansAttacks() {
 		PriorityQueue<Titan> pq = new PriorityQueue<Titan>();
 		int rv = 0;
@@ -80,11 +80,12 @@ public class Lane implements Comparable<Lane>
 			return 0;
 		else {
 			while(!titans.isEmpty()) {
-				rv = rv + titans.peek().attack(laneWall);
+				if(titans.peek().hasReachedTarget()) rv = rv + titans.peek().attack(laneWall);					
 				pq.add(titans.poll());
 			}
-			while (!pq.isEmpty())
+			while (!pq.isEmpty()) {
 				titans.add(pq.poll());
+			}
 			return rv;
 		}
 		
@@ -103,11 +104,7 @@ public class Lane implements Comparable<Lane>
 		}
 	}
 	public boolean isLaneLost() {
-		if (laneWall.isDefeated())
-			return true;
-		else
-			return false;
-		
+		return laneWall.isDefeated();
 	}
 	public void updateLaneDangerLevel() {
 		int dl = 0;
