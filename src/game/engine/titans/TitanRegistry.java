@@ -57,5 +57,24 @@ public class TitanRegistry // For storing the titan's information from the csv f
 	{
 		return dangerLevel;
 	}
-
+	
+	public Titan spawnTitan(int distanceFromBase) {
+		Titan t = null;
+		switch(code) {
+		case 1:
+			t = new PureTitan(baseHealth, baseDamage, heightInMeters, distanceFromBase, speed, resourcesValue, dangerLevel);
+			break;
+		case 2:
+			t = new AbnormalTitan(baseHealth, baseDamage, heightInMeters, distanceFromBase, speed, resourcesValue, dangerLevel);
+			break;
+		case 3:
+			t = new ArmoredTitan(baseHealth, baseDamage, heightInMeters, distanceFromBase, speed, resourcesValue, dangerLevel);
+			break;
+		case 4:
+			t = new ColossalTitan(baseHealth, baseDamage, heightInMeters, distanceFromBase, speed, resourcesValue, dangerLevel);
+			break;
+		}
+		
+		return t;
+	}
 }
