@@ -7,9 +7,14 @@ import java.util.PriorityQueue;
 
 import game.engine.base.Wall;
 import game.engine.dataloader.DataLoader;
+import game.engine.exceptions.InsufficientResourcesException;
+import game.engine.exceptions.InvalidLaneException;
 import game.engine.lanes.Lane;
 import game.engine.titans.Titan;
 import game.engine.titans.TitanRegistry;
+import game.engine.weapons.Weapon;
+import game.engine.weapons.WeaponRegistry;
+import game.engine.weapons.factory.FactoryResponse;
 import game.engine.weapons.factory.WeaponFactory;
 
 public class Battle
@@ -148,5 +153,103 @@ public class Battle
 			this.getLanes().add(l);
 		}
 	}
+	public  void refillApproachingTitans() {
+		if(battlePhase == BattlePhase.EARLY) {
+			int[] p1 = new int[7];
+			for (int i = 0; i<7; i++) {
+				p1[i]=PHASES_APPROACHING_TITANS[0][i];
+			}
+			for(int i=0;i<7;i++) {
+				TitanRegistry titanRegistry = titansArchives.get(p1[i]);
+				if(titanRegistry!=null) {
+					int d = titanSpawnDistance;
+					Titan t = titanRegistry.spawnTitan(d);
+					approachingTitans.add(t);
+			}
+			
+			
+		}
+			
+		}
+		if(battlePhase == BattlePhase.INTENSE) {
+			int[] p1 = new int[7];
+			for (int i = 0; i<7; i++) {
+				p1[i]=PHASES_APPROACHING_TITANS[1][i];
+			}
+			for(int i=0;i<7;i++) {
+				TitanRegistry titanRegistry = titansArchives.get(p1[i]);
+				if(titanRegistry!=null) {
+					int d = titanSpawnDistance;
+					Titan t = titanRegistry.spawnTitan(d);
+					approachingTitans.add(t);
+			}
+			
+			
+		}
+			
+		}
+		if(battlePhase == BattlePhase.GRUMBLING) {
+			int[] p1 = new int[7];
+			for (int i = 0; i<7; i++) {
+				p1[i]=PHASES_APPROACHING_TITANS[2][i];
+			}
+			for(int i=0;i<7;i++) {
+				TitanRegistry titanRegistry = titansArchives.get(p1[i]);
+				if(titanRegistry!=null) {
+					int d = titanSpawnDistance;
+					Titan t = titanRegistry.spawnTitan(d);
+					approachingTitans.add(t);
+			}
+			
+			
+		}
+			
+		}
+	}
+	public  void purchaseWeapon(int weaponCode, Lane lane) throws InsufficientResourcesException,
+	 InvalidLaneException{
+		if(!lanes.contains(lane)) {
+			throw new InvalidLaneException();
+		}
+		if (lane.isLaneLost()) {
+			throw new InvalidLaneException();
+			
+		}
+		
+		FactoryResponse wp = weaponFactory.buyWeapon(resourcesGathered, weaponCode);
+		lane.addWeapon(wp.getWeapon());
+		
+		
+		}
+	public void passTurn() {
+		
+	}
+	 private void addTurnTitansToLane() {
+		 Lane [] arr = new Lane[lanes.size()];
+		 int i =0;
+		 while(!lanes.isEmpty()) {
+			 arr[i]= lanes.poll();
+			  i++;
+		 }
+		 for(int j = 0; j < arr.length; j ++) {
+			 lanes.add(arr[i]);
+		 }
+		 if(approachingTitans.isEmpty()) {
+			 refillApproachingTitans();
+		 }
+		 int ii=0;
+		 int jj = arr.length-1;
+		 while(jj>=0) {
+			 if(!arr[jj].isLaneLost()) {
+				 arr[jj].addTitan(approachingTitans.get(ii));
+			 }
+			 ii++;
+			 jj++;
+		 }
+	 }
+	
+	}
 
-}
+	
+
+
