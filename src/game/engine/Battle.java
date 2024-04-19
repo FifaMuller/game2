@@ -288,7 +288,11 @@ public class Battle
 		 else {
 			 while(!lanes.isEmpty()) {
 				rv = rv + lanes.peek().performLaneTitansAttacks();
-				 pq.add(lanes.poll());
+				if(lanes.peek().isLaneLost())
+					lanes.poll();
+				else
+					pq.add(lanes.poll());
+				 
 			 }
 			 while(!pq.isEmpty()) {
 				 lanes.add(pq.poll());

@@ -12,7 +12,7 @@ public interface Mobil
 	
 	
 	public default boolean hasReachedTarget() {
-		if(getDistance() == 0)
+		if(getDistance() <= 0)
 			return true;
 		
 		else

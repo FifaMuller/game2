@@ -39,7 +39,11 @@ public class VolleySpreadCannon extends Weapon implements Attacker
 			while(!laneTitans.isEmpty()) {
 				if (laneTitans.peek().getDistance()<getMaxRange() && laneTitans.peek().getDistance()>getMinRange()) {
 					rv = rv + attack(laneTitans.peek());
-					pq.add(laneTitans.poll());
+					if(laneTitans.peek().isDefeated())
+						laneTitans.poll();
+					else
+						pq.add(laneTitans.poll());
+					
 					
 				}
 				else
@@ -48,9 +52,7 @@ public class VolleySpreadCannon extends Weapon implements Attacker
 				
 			}
 			while(!pq.isEmpty()) {
-				if (pq.peek().isDefeated())
-					pq.poll();
-				else
+				
 					laneTitans.add(pq.poll());
 				
 			}
