@@ -18,7 +18,6 @@ public class AbnormalTitan extends Titan implements Attacker
 	    if (this.hasReachedTarget()) {
 	        res = res + target.takeDamage(getDamage());
 	        if (target.isDefeated()) {
-	            target.setCurrentHealth(0); 
 	            return res;
 	        } else {
 	            res = res + target.takeDamage(getDamage());
