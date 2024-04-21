@@ -93,11 +93,12 @@ public class Lane implements Comparable<Lane>
 	}
 	public int performLaneWeaponsAttacks() {
 		int rv = 0;
-		if(weapons.isEmpty())
+		if(weapons.isEmpty()) {
 			return 0;
+		}
 		else {
 			int size = weapons.size();
-			for(int i = 0; i<=size ; i++ ) {
+			for(int i = 0; i<size ; i++ ) {
 				rv = rv + weapons.get(i).turnAttack(titans);
 			}
 		return rv;

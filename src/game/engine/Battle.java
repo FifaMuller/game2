@@ -226,28 +226,13 @@ public class Battle
 		performTurn();
 	}
 	 private void addTurnTitansToLane() {
-		 Lane [] arr = new Lane[lanes.size()];
-		 int i = 0;
-		 while(!lanes.isEmpty()) {
-			 arr[i]= lanes.poll();
-			  i++;
-		 }
-		 for(int j = 0; j < arr.length; j ++) {
-			 lanes.add(arr[j]);
-		 }
-		 if(approachingTitans.isEmpty()) {
-			 refillApproachingTitans();
-		 }
-		 int x  = 0;
-		 while(i>=0) {
-			 if(!arr[i-1].isLaneLost())
-				 break;
-			 else
-				 i--;
-		 }
-		 while(x<=numberOfTitansPerTurn) {
-			 arr[i].addTitan(approachingTitans.get(x));
-			 x++;
+
+		 for(int i =0; i < numberOfTitansPerTurn; i++) {
+			 if(approachingTitans.isEmpty()) {
+				 refillApproachingTitans();
+			 }
+			 lanes.peek().addTitan(approachingTitans.remove(0));
+			 
 		 }
 		
 		}
@@ -333,6 +318,7 @@ public class Battle
 		 
 	 }
 	 private void performTurn() {
+		 
 		 moveTitans();
 		 performWeaponsAttacks();
 		 performTitansAttacks();

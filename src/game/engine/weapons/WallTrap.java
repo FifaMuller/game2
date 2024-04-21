@@ -18,8 +18,9 @@ public class WallTrap extends Weapon implements Attacker
 	@Override
 	public int turnAttack(PriorityQueue<Titan> laneTitans) {
 		int rv = 0;
-		if (laneTitans.isEmpty())
+		if (laneTitans.isEmpty()) {
 			return 0;
+		}
 		else {
 			if (laneTitans.peek().hasReachedTarget())
 				rv = rv+attack(laneTitans.peek());

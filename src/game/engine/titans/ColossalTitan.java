@@ -13,11 +13,11 @@ public class ColossalTitan extends Titan implements Mobil
 	}
 	
 	public boolean move() {
+		setDistance(getDistance() - getSpeed());
+		setSpeed(getSpeed() + 1);
 		if(getDistance() <= 0)
 			return true;
 		else
-			setDistance(getDistance() - getSpeed());
-			setSpeed(getSpeed() + 1);
 			return false;
 	}
 	

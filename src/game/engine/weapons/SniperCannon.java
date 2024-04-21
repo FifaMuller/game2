@@ -17,8 +17,9 @@ public class SniperCannon extends Weapon implements Attacker
 	
 	public int turnAttack(PriorityQueue<Titan> laneTitans) {
 		int rv = 0;
-		if (laneTitans.isEmpty())
+		if (laneTitans.isEmpty()) {
 			return rv;
+		}
 		else {
 			Titan a = laneTitans.poll();
 			rv = rv + attack(a);

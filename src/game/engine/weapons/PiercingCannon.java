@@ -21,7 +21,7 @@ public class PiercingCannon extends Weapon implements Attacker
 		else {
 			int size = laneTitans.size();
 			PriorityQueue<Titan> pq = new PriorityQueue<Titan>();
-			if(size >= 5) {
+			if(size > 5) {
 				
 				for(int i = 0; i<5;i++) {
 					rv = rv+ attack(laneTitans.peek());
@@ -43,12 +43,13 @@ public class PiercingCannon extends Weapon implements Attacker
 					rv = rv + attack(laneTitans.peek());
 					pq.add(laneTitans.poll());
 				}
-				for(int i = 0; i<5;i++) {
-					if (pq.peek().isDefeated())
+				while(!pq.isEmpty()) {
+					if (pq.peek().isDefeated()) {
 						pq.poll();
-					else
+					}
+					else {
 						laneTitans.add(pq.poll());
-						
+					}
 				}
 				
 		
