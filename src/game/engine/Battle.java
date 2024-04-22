@@ -220,6 +220,7 @@ public class Battle
 		FactoryResponse wp = weaponFactory.buyWeapon(resourcesGathered, weaponCode);
 		resourcesGathered = wp.getRemainingResources();
 		lane.addWeapon(wp.getWeapon());
+		performTurn();
 		}
 	public void passTurn() {
 		 performTurn();
@@ -298,20 +299,17 @@ public class Battle
 		 }
 	 }
 	 private void finalizeTurns() {
+		 numberOfTurns++;
 		 if(numberOfTurns<15) {
 			 battlePhase = BattlePhase.EARLY;
-			 numberOfTurns++;
 		 }
 		 if(numberOfTurns<30 && numberOfTurns>=15) {
 			 battlePhase = BattlePhase.INTENSE;
-			 numberOfTurns++;
 		 }
 		 if(numberOfTurns>=30) {
 			 battlePhase = BattlePhase.GRUMBLING;
-			 numberOfTurns++;
 		 }
 		 if(numberOfTurns>30 &&  numberOfTurns%5 == 0) {
-			 numberOfTurns++;
 			 numberOfTitansPerTurn = numberOfTitansPerTurn *2;
 		 }
 		 
