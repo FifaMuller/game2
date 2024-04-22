@@ -1,6 +1,8 @@
 package game.engine;
 
+
 import java.io.IOException;
+
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.PriorityQueue;
@@ -206,8 +208,7 @@ public class Battle
 			
 		}
 	}
-	public  void purchaseWeapon(int weaponCode, Lane lane) throws InsufficientResourcesException,
-	 InvalidLaneException{
+	public  void purchaseWeapon(int weaponCode, Lane lane) throws InsufficientResourcesException, InvalidLaneException {
 		if(!lanes.contains(lane)) {
 			throw new InvalidLaneException();
 		}
@@ -219,11 +220,9 @@ public class Battle
 		FactoryResponse wp = weaponFactory.buyWeapon(resourcesGathered, weaponCode);
 		resourcesGathered = wp.getRemainingResources();
 		lane.addWeapon(wp.getWeapon());
-		
-		
 		}
 	public void passTurn() {
-		performTurn();
+		 performTurn();
 	}
 	 private void addTurnTitansToLane() {
 
@@ -262,6 +261,8 @@ public class Battle
 			 }
 			 
 		 }
+		 resourcesGathered += rv; 
+		 score += rv;
 		 return rv;
 			 
 		 }
@@ -316,6 +317,7 @@ public class Battle
 		 
 		 
 		 
+		 
 	 }
 	 private void performTurn() {
 		 
@@ -345,10 +347,7 @@ public class Battle
 		 return gameOver;
 		 
 	 }
-	
-	}
-
-
-	
-
-
+	 
+	 
+	 	
+}

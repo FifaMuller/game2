@@ -20,7 +20,6 @@ public interface Attackee
 	
 	public default int takeDamage(int damage) {
 		setCurrentHealth(getCurrentHealth() - damage);
-		
 		if(isDefeated()) return getResourcesValue();
 		else return 0;
 		
